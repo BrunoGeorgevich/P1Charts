@@ -1,7 +1,7 @@
 #include "storage.h"
 
-ChartDetails * ChartDetailsInit() {
-	ChartDetails * chartDetails = malloc(sizeof(ChartDetails));
+Chart * ChartInit() {
+	Chart * chartDetails = malloc(sizeof(Chart));
 	return chartDetails;
 }
 
@@ -12,7 +12,7 @@ void DatumPrint(Datum * datum) {
 	printf("#########################\n");
 }
 
-void ChartDetailsPrint(ChartDetails * chart) {
+void ChartPrint(Chart * chart) {
 	printf("#########################\n");
 	printf("### Chart %p\n", chart);
 	printf("#------------------------\n");
@@ -53,13 +53,13 @@ char * createFilePath(const char * fileName, const char *fileType) {
 	return filePath;
 }
 
-ChartDetails *ChartDetailsCreate(char * filePath) {
-	ChartDetails *chart = ChartDetailsInit();
+Chart *ChartCreate(char * filePath) {
+	Chart *chart = ChartInit();
 	json_t *root;
     json_error_t error;
     root = json_load_file(filePath, 0, &error);
     if(!root){
-        fprintf(stderr, "P1Charts:Storage:ChartDetailsCreate:Error:%s\n", error.text);
+        fprintf(stderr, "P1Charts:Storage:ChartCreate:Error:%s\n", error.text);
         exit(1);
     }
     const char *fileType = JsonGetStringAttribute(root, "fileType");
@@ -79,6 +79,6 @@ ChartDetails *ChartDetailsCreate(char * filePath) {
 		chart->content[i]->percentage = JsonGetFloatAttribute(jDatum, "percentage");
 	}
 	chart->content[i] = 0;
-	ChartDetailsPrint(chart);
+	ChartPrint(chart);
     return chart;
 }

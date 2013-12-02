@@ -6,8 +6,8 @@
 
 
 int main() {
-	ChartDetails * storage = ChartDetailsCreate("test.json");
-	Drawer * cairo = DrawerInit(800, 600, storage->fileType, storage->filePath);
+	Chart * chart = ChartCreate("test.json");
+	Drawer * cairo = DrawerInit(800, 600, chart->fileType, chart->filePath);
 	Rectangle base = {0, //x
 					  0, //y
 					  800, //width
@@ -27,7 +27,7 @@ int main() {
 					  {0.0, 1.0, 0.0, 1.0} // Color border
 	};
 	DrawerDrawRectangle(cairo, rect);
-	DrawerSave(cairo, storage->fileType, storage->filePath);
+	DrawerSave(cairo, chart->fileType, chart->filePath);
 	DrawerDestroy(cairo);
 	return 0;
 }

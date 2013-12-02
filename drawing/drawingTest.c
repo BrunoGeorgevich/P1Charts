@@ -4,7 +4,7 @@
 
 int main() {
 	/**********************************
- 	* 1 - Criar papel e caneta cairo *
+    * 1 - Criar papel e caneta cairo *
  	**********************************/
  	Drawer * cairo = DrawerInit(800, 600, 0, "result.pdf");
 

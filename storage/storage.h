@@ -17,8 +17,8 @@ struct _chart {
 	int height;
 	Datum ** content;
 };
-typedef struct _chart ChartDetails;
+typedef struct _chart Chart;
 
 char * createFilePath(const char * fileName, const char *fileType);
-ChartDetails * ChartDetailsCreate(char * filePath);
+Chart * ChartCreate(char * filePath);
 
