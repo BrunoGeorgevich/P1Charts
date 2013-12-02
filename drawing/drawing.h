@@ -1,4 +1,5 @@
 #include <cairo/cairo.h>
+#include <cairo/cairo-pdf.h>
 #include <stdlib.h>
 
 struct _cairo_definition {
@@ -26,6 +27,7 @@ struct _rectangle {
 
 typedef struct _rectangle Rectangle;
 
-CairoDef * CairoDef_Init();
-void CairoDef_Destroy(CairoDef * self);
+CairoDef * CairoDefInit(int width, int height, char fileTypePDF, const char * filePath);
+void CairoDefDestroy(CairoDef * self);
 void CairoDefDrawRectangle(CairoDef * self, Rectangle rect);
+void CairoDefSave(CairoDef * self, char fileTypePDF, const char * filePath);

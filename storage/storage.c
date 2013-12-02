@@ -16,8 +16,8 @@ void ChartDetailsPrint(ChartDetails * chart) {
 	printf("#########################\n");
 	printf("### Chart %p\n", chart);
 	printf("#------------------------\n");
-	printf("# FileName: %s\n", chart->fileName);
-	printf("# FileType: %s\n", chart->fileType);
+	printf("# FilePath: %s\n", chart->filePath);
+	printf("# FileType: %s\n", (chart->fileType == 0 ? "png" : "pdf"));
 	printf("# Width: %d\n", chart->width);
 	printf("# Height: %d\n", chart->height);
 	printf("#########################\n");
@@ -42,23 +42,30 @@ int JsonGetIntAttribute(json_t *root, const char * attName) {
 
 float JsonGetFloatAttribute(json_t *root, const char * attName) {
 	json_t * jAtt = json_object_get(root, attName);
-	//printf("JsonGetFloatAttribute:Is real? %d\n", json_is_real(jAtt));
     float result = json_real_value(jAtt);
     free(jAtt);
     return result;
+}
+
+char * createFilePath(const char * fileName, const char *fileType) {
+	char * filePath = malloc(strlen(fileName) + strlen(fileType) + 3);
+	sprintf(filePath, "%s.%s", fileName, fileType);
+	return filePath;
 }
 
 ChartDetails *ChartDetailsCreate(char * filePath) {
 	ChartDetails *chart = ChartDetailsInit();
 	json_t *root;
     json_error_t error;
-    root = json_load_file("../test.json", 0, &error);
+    root = json_load_file(filePath, 0, &error);
     if(!root){
         fprintf(stderr, "error: on line %d: %s\n", error.line, error.text);
         return 0;
     }
-    chart->fileName = JsonGetStringAttribute(root, "fileName");
-    chart->fileType = JsonGetStringAttribute(root, "fileType");
+    const char *fileType = JsonGetStringAttribute(root, "fileType");
+    chart->fileType = (strcmp("png",fileType) == 0 ? 0: 1);
+    chart->filePath = createFilePath(JsonGetStringAttribute(root, "fileName"),
+									 fileType);
     chart->width = JsonGetIntAttribute(root, "width");
     chart->height = JsonGetIntAttribute(root, "height");
 

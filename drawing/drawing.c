@@ -1,14 +1,18 @@
 #include "drawing.h"
 
-CairoDef * CairoDef_Init(int width, int height) {
+CairoDef * CairoDefInit(int width, int height, char fileTypePDF, const char * filePath) {
 	CairoDef * self = malloc(sizeof(CairoDef));
-	self->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+	if(fileTypePDF) {
+		self->surface = cairo_pdf_surface_create(filePath, width, height);
+	} else {
+		self->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
+	}
     self->context = cairo_create(self->surface);
     cairo_set_antialias(self->context, CAIRO_ANTIALIAS_BEST);
     return self;
 }
 
-void CairoDef_Destroy(CairoDef * self){
+void CairoDefDestroy(CairoDef * self){
 	cairo_destroy(self->context);
     cairo_surface_destroy(self->surface);
     free(self);
@@ -31,4 +35,12 @@ void CairoDefDrawRectangle(CairoDef * self, Rectangle rect) {
  						  rect.border.a);
  	cairo_stroke(self->context);
  	cairo_restore(self->context);
+}
+
+void CairoDefSave(CairoDef * self, char fileTypePDF, const char * filePath) {
+	if(fileTypePDF) {
+		cairo_show_page(self->context);
+	} else {
+		cairo_surface_write_to_png(self->surface, filePath);
+	}
 }

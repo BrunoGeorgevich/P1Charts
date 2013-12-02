@@ -6,7 +6,7 @@ int main() {
 	/**********************************
  	* 1 - Criar papel e caneta cairo *
  	**********************************/
- 	CairoDef * cairo = CairoDef_Init(800, 600);
+ 	CairoDef * cairo = CairoDefInit(800, 600, 0, "result.pdf");
 
 	/****************
  	* 2 - Desenhar *
@@ -53,7 +53,7 @@ int main() {
 	/******************************
  	* 4 - Deletar caneta e papel *
  	******************************/
-    CairoDef_Destroy(cairo);
+    CairoDefDestroy(cairo);
 	cairo = 0;
 	return 0;
 }
