@@ -6,7 +6,7 @@ int main() {
 	/**********************************
  	* 1 - Criar papel e caneta cairo *
  	**********************************/
- 	CairoDef * cairo = CairoDefInit(800, 600, 0, "result.pdf");
+ 	Drawer * cairo = DrawerInit(800, 600, 0, "result.pdf");
 
 	/****************
  	* 2 - Desenhar *
@@ -19,7 +19,7 @@ int main() {
 					  {1.0, 1.0, 1.0, 1.0},// Color Bg
 					  {0.0, 0.0, 0.0, 0.0}// Color border (borderless)
 	};
-	CairoDefDrawRectangle(cairo, base);
+	DrawerDrawRectangle(cairo, base);
 
  	/*cairo_rectangle (cairo->context, 0, 0, 800, 600);
 	cairo_set_source_rgb(cairo->context, 1.0, 1.0, 1.0);
@@ -33,7 +33,7 @@ int main() {
 					  {1.0, 0.0, 1.0, 1.0}, // Color Bg
 					  {0.0, 1.0, 0.0, 1.0} // Color border
 	};
-	CairoDefDrawRectangle(cairo, rect);
+	DrawerDrawRectangle(cairo, rect);
 
 	/*cairo_rectangle (cairo->context, 400 - 50, 300 - 50, 100, 100);
 	cairo_set_source_rgb(cairo->context, 1.0, 0.0, 0.0);
@@ -53,7 +53,7 @@ int main() {
 	/******************************
  	* 4 - Deletar caneta e papel *
  	******************************/
-    CairoDefDestroy(cairo);
+    DrawerDestroy(cairo);
 	cairo = 0;
 	return 0;
 }

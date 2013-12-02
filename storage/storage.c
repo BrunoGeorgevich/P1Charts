@@ -59,8 +59,8 @@ ChartDetails *ChartDetailsCreate(char * filePath) {
     json_error_t error;
     root = json_load_file(filePath, 0, &error);
     if(!root){
-        fprintf(stderr, "error: on line %d: %s\n", error.line, error.text);
-        return 0;
+        fprintf(stderr, "P1Charts:Storage:ChartDetailsCreate:Error:%s\n", error.text);
+        exit(1);
     }
     const char *fileType = JsonGetStringAttribute(root, "fileType");
     chart->fileType = (strcmp("png",fileType) == 0 ? 0: 1);

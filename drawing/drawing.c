@@ -1,7 +1,7 @@
 #include "drawing.h"
 
-CairoDef * CairoDefInit(int width, int height, char fileTypePDF, const char * filePath) {
-	CairoDef * self = malloc(sizeof(CairoDef));
+Drawer * DrawerInit(int width, int height, char fileTypePDF, const char * filePath) {
+	Drawer * self = malloc(sizeof(Drawer));
 	if(fileTypePDF) {
 		self->surface = cairo_pdf_surface_create(filePath, width, height);
 	} else {
@@ -12,13 +12,13 @@ CairoDef * CairoDefInit(int width, int height, char fileTypePDF, const char * fi
     return self;
 }
 
-void CairoDefDestroy(CairoDef * self){
+void DrawerDestroy(Drawer * self){
 	cairo_destroy(self->context);
     cairo_surface_destroy(self->surface);
     free(self);
 }
 
-void CairoDefDrawRectangle(CairoDef * self, Rectangle rect) {
+void DrawerDrawRectangle(Drawer * self, Rectangle rect) {
 	cairo_save(self->context);
 	cairo_set_line_width(self->context, rect.borderWidth);
 	cairo_rectangle (self->context, rect.x, rect.y, rect.width, rect.height);
@@ -37,7 +37,7 @@ void CairoDefDrawRectangle(CairoDef * self, Rectangle rect) {
  	cairo_restore(self->context);
 }
 
-void CairoDefSave(CairoDef * self, char fileTypePDF, const char * filePath) {
+void DrawerSave(Drawer * self, char fileTypePDF, const char * filePath) {
 	if(fileTypePDF) {
 		cairo_show_page(self->context);
 	} else {

@@ -7,7 +7,7 @@
 
 int main() {
 	ChartDetails * storage = ChartDetailsCreate("test.json");
-	CairoDef * cairo = CairoDefInit(800, 600, storage->fileType, storage->filePath);
+	Drawer * cairo = DrawerInit(800, 600, storage->fileType, storage->filePath);
 	Rectangle base = {0, //x
 					  0, //y
 					  800, //width
@@ -16,7 +16,7 @@ int main() {
 					  {1.0, 1.0, 1.0, 1.0},// Color Bg
 					  {0.0, 0.0, 0.0, 0.0}// Color border (borderless)
 	};
-	CairoDefDrawRectangle(cairo, base);
+	DrawerDrawRectangle(cairo, base);
 
 	Rectangle rect = {400-50, //x
 					  300-50, //y
@@ -26,8 +26,8 @@ int main() {
 					  {1.0, 0.0, 1.0, 1.0}, // Color Bg
 					  {0.0, 1.0, 0.0, 1.0} // Color border
 	};
-	CairoDefDrawRectangle(cairo, rect);
-	CairoDefSave(cairo, storage->fileType, storage->filePath);
-	CairoDefDestroy(cairo);
+	DrawerDrawRectangle(cairo, rect);
+	DrawerSave(cairo, storage->fileType, storage->filePath);
+	DrawerDestroy(cairo);
 	return 0;
 }

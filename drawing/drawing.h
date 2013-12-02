@@ -2,12 +2,12 @@
 #include <cairo/cairo-pdf.h>
 #include <stdlib.h>
 
-struct _cairo_definition {
+struct _drawer {
 	cairo_surface_t *surface;
     cairo_t * context;
 };
 
-typedef struct _cairo_definition CairoDef;
+typedef struct _drawer Drawer;
 
 struct _color {
 	float r, g, b, a;
@@ -27,7 +27,7 @@ struct _rectangle {
 
 typedef struct _rectangle Rectangle;
 
-CairoDef * CairoDefInit(int width, int height, char fileTypePDF, const char * filePath);
-void CairoDefDestroy(CairoDef * self);
-void CairoDefDrawRectangle(CairoDef * self, Rectangle rect);
-void CairoDefSave(CairoDef * self, char fileTypePDF, const char * filePath);
+Drawer * DrawerInit(int width, int height, char fileTypePDF, const char * filePath);
+void DrawerDestroy(Drawer * self);
+void DrawerDrawRectangle(Drawer * self, Rectangle rect);
+void DrawerSave(Drawer * self, char fileTypePDF, const char * filePath);
