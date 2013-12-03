@@ -1,9 +1,25 @@
 #include <stdio.h>
+#include <string.h>
+
 #include "drawing.h"
 #include "storage.h"
-#include <string.h>
-#include <stdio.h>
 
+void pizza(Drawer * drawer, Chart * chart) {
+    float initAngle = 0.0;
+    for(int i = 0; chart->content[i] != 0; ++i) {
+        Arc arc = {400, //x
+                  300, //y
+                  initAngle, //initAngle
+                  initAngle + chart->content[i]->percentage*2*M_PI, //endAngle
+                  50,   //radius
+                  1.0, // borderWidth
+                  {i*0.1, 1.0, i*0.1, 1.0}, // Color Bg
+                  {i*0.3, 0, i*0.3, 1.0} // Color border
+        };
+        DrawerDrawArc(drawer, arc);
+        initAngle += chart->content[i]->percentage*2*M_PI;
+	}
+}
 
 int main() {
 	Chart * chart = ChartCreate("test.json");
@@ -27,6 +43,7 @@ int main() {
 					  {0.0, 1.0, 0.0, 1.0} // Color border
 	};
 	DrawerDrawRectangle(cairo, rect);
+	pizza(cairo, chart);
 	DrawerSave(cairo, chart->fileType, chart->filePath);
 	DrawerDestroy(cairo);
 	return 0;
