@@ -5,7 +5,6 @@
 cmake_minimum_required (VERSION 2.6)
 project(P1Charts)
 
-set(CMAKE_C_FLAGS "-std=c99") 
 
 include_directories ("${PROJECT_SOURCE_DIR}/storage")
 add_subdirectory (storage)

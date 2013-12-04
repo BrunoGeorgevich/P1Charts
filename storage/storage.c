@@ -21,7 +21,8 @@ void ChartPrint(Chart * chart) {
 	printf("# Width: %d\n", chart->width);
 	printf("# Height: %d\n", chart->height);
 	printf("#########################\n");
-	for(int i = 0; chart->content[i] != 0; ++i) {
+	int i;
+	for(i = 0; chart->content[i] != 0; ++i) {
 		DatumPrint(chart->content[i]);
 	}
 }
@@ -68,10 +69,10 @@ Chart *ChartCreate(char * filePath) {
 									 fileType);
     chart->width = JsonGetIntAttribute(root, "width");
     chart->height = JsonGetIntAttribute(root, "height");
-
-	json_t * jcontent = json_object_get(root, "content");
-	chart->content = malloc(sizeof(Datum *)*json_array_size(jcontent) + 1);
-	int i;
+	 chart->chartType = JsonGetStringAttribute(root, "chartType");
+	 json_t * jcontent = json_object_get(root, "content");
+	 chart->content = malloc(sizeof(Datum *)*json_array_size(jcontent) + 1);
+	 int i;
 	for(i = 0; i < json_array_size(jcontent); ++i){
         json_t *jDatum = json_array_get(jcontent, i);
         chart->content[i] = malloc(sizeof(Datum));

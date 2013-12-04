@@ -15,6 +15,7 @@ struct _chart {
 	char fileType;
 	int width;
 	int height;
+	const char * chartType;
 	Datum ** content;
 };
 typedef struct _chart Chart;

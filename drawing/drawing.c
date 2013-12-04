@@ -8,7 +8,6 @@ Drawer * DrawerInit(int width, int height, char fileTypePDF, const char * filePa
 		self->surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, width, height);
 	}
     self->context = cairo_create(self->surface);
-    cairo_set_antialias(self->context, CAIRO_ANTIALIAS_BEST);
     return self;
 }
 
@@ -69,6 +68,62 @@ void DrawerDrawArc(Drawer * self, Arc arc) {
     cairo_restore(self->context);
 }
 
+void DrawerDrawTextArc(Drawer*self,Text text,Arc arc,Rectangle rect) {
+	float x, y;	
+	cairo_save(self->context);	
+	cairo_text_extents_t extents;
+	cairo_select_font_face (self->context, "Arial", CAIRO_FONT_SLANT_NORMAL,
+                               CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size (self->context, text.fontSize);
+	cairo_set_source_rgba(self->context, 
+													text.bg.r,
+													text.bg.g,
+													text.bg.b,
+													text.bg.a);
+   cairo_text_extents (self->context,text.label, &extents);	
+	x = rect.width/4-(extents.width/2 + extents.x_bearing);
+	y = 3*rect.height/4-(extents.height/2 + extents.y_bearing);
+   cairo_line_to(self->context, x,
+		  							     y+text.spaceLegend);
+	cairo_text_path (self->context,text.label);
+	cairo_fill_preserve(self->context);
+	cairo_set_source_rgba(self->context, 
+													text.border.r,
+													text.border.g,
+													text.border.b,
+													text.border.a);
+	cairo_set_line_width(self->context, text.borderWidth);
+	cairo_stroke(self->context);
+	cairo_restore(self->context);
+}
+void DrawerDrawTextRect(Drawer * self, Text text, Rectangle rect2,  Rectangle rect) {
+	float x, y;	
+	cairo_save(self->context);	
+	cairo_text_extents_t extents;
+	cairo_select_font_face (self->context, "Arial", CAIRO_FONT_SLANT_NORMAL,
+                               CAIRO_FONT_WEIGHT_BOLD);
+	cairo_set_font_size (self->context, text.fontSize);
+	cairo_set_source_rgba(self->context, 
+													text.bg.r,
+													text.bg.g,
+													text.bg.b,
+													text.bg.a);
+   cairo_text_extents (self->context,text.label, &extents);	
+	x = rect.width/4-(extents.width/2 + extents.x_bearing);
+	y = 3*rect.height/4-(extents.height/2 + extents.y_bearing);
+   cairo_line_to(self->context, x,
+		  							     y+text.spaceLegend);
+	cairo_text_path (self->context,text.label);
+	cairo_fill_preserve(self->context);
+	cairo_set_source_rgba(self->context, 
+													text.border.r,
+													text.border.g,
+													text.border.b,
+													text.border.a);
+	cairo_set_line_width(self->context, text.borderWidth);
+	cairo_stroke(self->context);
+	cairo_restore(self->context);
+}
 void DrawerSave(Drawer * self, char fileTypePDF, const char * filePath) {
 	if(fileTypePDF) {
 		cairo_show_page(self->context);
