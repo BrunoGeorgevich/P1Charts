@@ -58,15 +58,15 @@ int main() {
 
 	Text text = {
 	 5*arc.borderWidth,
-	 arc.x,
-	 arc.y,
 	"Hello",
+	 "oi",
 	 1,
+	15,
 	{0.0,0.0,0.0,1.0},
 	{1.0,0.0,0.0,1.0}
 };
 
-	 DrawerDrawTextArc(cairo, text, arc, base);
+	 DrawerDrawText(cairo, text, base);
 
 	/*************************
  	* 3 - Salvar em arquivo *

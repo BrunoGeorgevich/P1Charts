@@ -70,6 +70,7 @@ Chart *ChartCreate(char * filePath) {
     chart->width = JsonGetIntAttribute(root, "width");
     chart->height = JsonGetIntAttribute(root, "height");
 	 chart->chartType = JsonGetStringAttribute(root, "chartType");
+	 chart->chartName = JsonGetStringAttribute(root, "chartName");
 	 json_t * jcontent = json_object_get(root, "content");
 	 chart->content = malloc(sizeof(Datum *)*json_array_size(jcontent) + 1);
 	 int i;

@@ -13,6 +13,7 @@ typedef struct _datum Datum;
 struct _chart {
 	const char * filePath;
 	char fileType;
+	const char * chartName;
 	int width;
 	int height;
 	const char * chartType;
