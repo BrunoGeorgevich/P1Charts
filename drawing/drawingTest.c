@@ -3,14 +3,14 @@
 #include "drawing.h"
 
 int main() {
-	/**********************************
+	/***********************************
     * 1 - Criar papel e caneta cairo *
- 	**********************************/
+ 	*********************************
  	Drawer * cairo = DrawerInit(800, 600, 0, "result.pdf");
 
 	/****************
  	* 2 - Desenhar *
- 	****************/
+ 	****************
  	Rectangle base = {0, //x
 					  0, //y
 					  800, //width
@@ -23,7 +23,7 @@ int main() {
 
  	/*cairo_rectangle (cairo->context, 0, 0, 800, 600);
 	cairo_set_source_rgb(cairo->context, 1.0, 1.0, 1.0);
-	cairo_fill(cairo->context);*/
+	cairo_fill(cairo->context);*
 	Arc arc = {400, //x
               300, //y
               0, //initAngle
@@ -48,11 +48,11 @@ int main() {
 	cairo_set_source_rgb(cairo->context, 1.0, 0.0, 0.0);
 	cairo_fill_preserve(cairo->context);
  	cairo_set_source_rgba(cairo->context, 1.0, 1.0, 0.0, 1.0);
- 	cairo_stroke(cairo->context);*/
+ 	cairo_stroke(cairo->context);*
 
  	/*cairo_set_source_rgb(cairo->context, 0.0, 0.0, 0.0);
 	cairo_arc (cairo->context, 400, 300, 2, 0, 2* M_PI);
-	cairo_fill(cairo->context);*/
+	cairo_fill(cairo->context);*
 	
    DrawerDrawArc(cairo, arc);
 
@@ -70,13 +70,13 @@ int main() {
 
 	/*************************
  	* 3 - Salvar em arquivo *
- 	*************************/
+ 	*************************
 	cairo_surface_write_to_png(cairo->surface, "test.png");
 
 	/******************************
  	* 4 - Deletar caneta e papel *
- 	******************************/
+ 	******************************
     DrawerDestroy(cairo);
 	cairo = 0;
-	return 0;
+	return 0;*/
 }

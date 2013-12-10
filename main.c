@@ -19,34 +19,34 @@ void barra(Drawer * drawer, Chart * chart, Rectangle base) {
 		PercToText(perc*100,str);
 	 
 		RandColor(&rcolor);
-	   Rectangle rect = {base.width/9 + base.width/6*i, //x
+	   Rectangle rect = {base.width/9 + base.width/9*i, //x
             	      	2*base.height/3, //y
-            	      	120,//width
+            	      	60,//width
                         -perc*rect.y/2, //Percentage
-                  	 0.0, // borderWidth
-                     {rcolor.r/10000000, rcolor.g/10000000, rcolor.b/10000000, 1.0}, // Color Bg
-                     {1.0,1.0,1.0, 1.0} // Color border
+                  		 0.0, // borderWidth
+                    		{rcolor.r/10000000, rcolor.g/10000000, rcolor.b/10000000, 1.0}, // Color Bg
+                     	{1.0,1.0,1.0, 1.0} // Color border
 };		
 		
 		
 		TextPlus(str, "%");
 	 	Text text = {
 		  	 
-	 		 20,
-			 base.width/9 + base.width/6*i + 60,
-			 2*base.height/3,
-		  	 chart->content[i]->label ,
-			 str,
-		  	 1,
-		    25,
-			 100,
-			 -90,
-			 190 + 200 - perc*200,
-			 1,
-			 0,
-			 rect.bg,
-			 {1.0,1.0,1.0,1.0},
-			 rect.bg
+	 		 15,//Font Size
+			 rect.x + 30,//X
+			 rect.y,//Y
+		  	 chart->content[i]->label ,//Label
+			 str,//Percentage(String Form)
+		  	 1,//BorderWidth
+		    20,//Space Legend
+			 100,//Space Percentage
+			 -90,//Coordenada X da porcentagem
+			 190 + 200 - perc*200,//Coordenada Y da porcentagem
+			 1,//Se 1 = Retangulo
+			 0,//Se 1 = Arco
+			 rect.bg,//Color Bg
+			 {1.0,1.0,1.0,1.0},//Color Border
+			 rect.bg//Color of Percentage
 };
 	
 		
@@ -100,21 +100,21 @@ void pizza(Drawer * drawer, Chart * chart, Rectangle base) {
 
 	 	Text text = {
 		  	 
-	 		 20,
-			 2*base.width/3,
-			 base.height/3,
-		  	 chart->content[i]->label ,
-			 str,
-		  	 1,
-		    35*i,
-			 100,
-			 2*base.width/3,
-			 base.height/3,
-	   	 0,
-	       1,
-		  	 {1.0,1.0,1.0,1.0},
-		  	 {rcolor.r/10000000, rcolor.g/10000000, rcolor.b/10000000, 1.0},
-		    {1.0,1.0,1.0,1.0}
+	 		 20,//Font Size
+			 2*base.width/3,//X
+			 base.height/3,//Y
+		  	 chart->content[i]->label ,//Label
+			 str,//Percentage(String Form)
+		  	 1,//BorderWidth
+		    35*i,//Space Legend
+			 100,//Space Percentage
+			 2*base.width/3,//Coordenada X da porcentagem
+			 base.height/3,//Coordenada Y da porcentagem
+	   	 0,//Se 1 = Retangulo
+	       1,//Se 1 = Arco
+		  	 {1.0,1.0,1.0,1.0},//Color Bg
+		  	 {rcolor.r/10000000, rcolor.g/10000000, rcolor.b/10000000, 1.0},//Color Border
+		    {1.0,1.0,1.0,1.0}//Color of Percentage
 };
 	Rectangle rectPerc = {2*base.width/3 + 95, //x
             	      		base.height/3 - (3)*text.fontSize/(4) + text.spaceLegend, //y
