@@ -70,17 +70,75 @@ Chart *ChartCreate(char * filePath) {
     chart->width = JsonGetIntAttribute(root, "width");
     chart->height = JsonGetIntAttribute(root, "height");
 	 chart->chartType = JsonGetStringAttribute(root, "chartType");
-	 chart->chartName = JsonGetStringAttribute(root, "name");
+	 chart->chartName = JsonGetStringAttribute(root, "chartName");
 	 json_t * jcontent = json_object_get(root, "content");
 	 chart->content = malloc(sizeof(Datum *)*json_array_size(jcontent) + 1);
+	 chart->DatumSize = json_array_size(jcontent);
+	 chart->Sum_Percentages = 0;
 	 int i;
-	for(i = 0; i < json_array_size(jcontent); ++i){
+	for(i = 0; i < chart->DatumSize; ++i){
         json_t *jDatum = json_array_get(jcontent, i);
         chart->content[i] = malloc(sizeof(Datum));
 		chart->content[i]->label = JsonGetStringAttribute(jDatum, "label");
 		chart->content[i]->percentage = JsonGetFloatAttribute(jDatum, "percentage");
+		chart->Sum_Percentages += chart->content[i]->percentage;
 	}
 	chart->content[i] = 0;
 	ChartPrint(chart);
     return chart;
+}
+	void type(char * string, char * type) {
+		int cont;
+		for(cont = 0; ;cont++) {
+		 if(string[cont] == '.') {
+		  break;
+		 }
+}
+		int length = strlen(string);
+		int aux, aux2;
+		for(aux = cont,aux2 = 0; aux <= length ; aux++, aux2++) {
+		type[aux2] = string[aux];
+		  
+		}
+}
+	int compare(char * one, char * two) {
+		return strcmp(one, two);
+}
+	void sort(float * array, Chart * chart) {
+		int cont,aux2;
+		float aux;
+		int i = chart->DatumSize;
+		for(cont = 1;cont < i ; cont++) {	
+
+		 if(array[cont-1] > array[cont]) {
+		aux = array[cont];
+		array[cont] = array[cont-1];
+		array[cont-1] = aux;
+	}
+}
+	
+		for(aux2 = 1;aux2< i ; aux2++) {
+		 if(array[aux2-1] > array[aux2]) {
+		 sort(array, chart);
+		}
+	}
+}
+	int SpaceValue(int x) {
+		switch(x) {
+		 case 1:
+			return 1;
+		 	break;
+		 case 2:
+			return 24;
+		 	break;
+		 case 3:
+			return 16;
+		 	break;
+		 case 4:
+			return 12;
+		 	break;
+		 case 5:
+			return 10;
+		 	break;
+	}
 }

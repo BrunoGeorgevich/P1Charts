@@ -42,6 +42,19 @@ struct _arc {
 
 typedef struct _arc Arc;
 
+struct _arrow {
+	int x0r;
+	int y0r;
+	int x0l;
+	int y0l;
+	int x;
+	int y;
+	float arrowWidth;
+	Color bg;
+};
+
+typedef struct _arrow Arrow;
+
 struct _axis {
 	int x0;
 	int y0;
@@ -83,12 +96,13 @@ struct _title {
 typedef struct _title Title;
 
 Drawer * DrawerInit(int width, int height, char fileTypePDF, const char * filePath);
+void DrawerDrawArrow (Drawer * self, Axis axis, Arrow arrow);
 void DrawerDestroy(Drawer * self);
 void DrawerDrawRectangle(Drawer * self, Rectangle rect);
 void DrawerDrawArc(Drawer * self, Arc arc);
 void DrawerDrawText(Drawer * self, Text text, Rectangle rect);
 void DrawerSave(Drawer * self, char fileTypePDF, const char * filePath);
-void RandColor(Color * color);
-void TextPlus(char str[100], char aux[100]);
+void randColor(Color * color);
+void textPlus(char str[100], char aux[100]);
 void DrawerDrawTextTitle(Drawer * self, Title title,  Rectangle rect);
 void DrawerDrawAxis(Drawer * self, Axis axis, Rectangle rect);

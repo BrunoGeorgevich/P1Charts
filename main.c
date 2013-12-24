@@ -4,7 +4,7 @@
 #include "drawing.h"
 #include "storage.h"
 
-void PercToText(float x, char str[20]) {
+void percToText(float x, char str[20]) {
 	   sprintf(str, "%.0f", x);
 }
 
@@ -16,32 +16,32 @@ void barra(Drawer * drawer, Chart * chart, Rectangle base) {
 	 char str[20] = "";
   for(i = 0; chart->content[i] != 0; ++i) {
 		float perc = chart->content[i]->percentage;
-		PercToText(perc*100,str);
+		percToText(perc*100,str);
 	 
-		RandColor(&rcolor);
-	   Rectangle rect = {base.width/9 + base.width/9*i, //x
-            	      	2*base.height/3, //y
-            	      	60,//width
-                        -perc*rect.y/2, //Percentage
+		randColor(&rcolor);
+	   Rectangle rect = {base.width/10 + (SpaceValue(chart->DatumSize)*base.width/80)*(i), //x
+            	      	14*base.height/15, //y
+            	      	(8*base.width/15)/chart->DatumSize,//width
+                        -perc*((11*base.height/15)/chart->Sum_Percentages), //height
                   		 0.0, // borderWidth
                     		{rcolor.r/10000000, rcolor.g/10000000, rcolor.b/10000000, 1.0}, // Color Bg
                      	{1.0,1.0,1.0, 1.0} // Color border
 };		
 		
 		
-		TextPlus(str, "%");
+		textPlus(str, "%");
 	 	Text text = {
 		  	 
 	 		 15,//Font Size
-			 rect.x + 30,//X
-			 rect.y,//Y
+			 rect.x+rect.width/2,//X
+			 20*base.height/21,//Y
 		  	 chart->content[i]->label ,//Label
 			 str,//Percentage(String Form)
 		  	 1,//BorderWidth
-		    20,//Space Legend
-			 100,//Space Percentage
-			 -90,//Coordenada X da porcentagem
-			 190 + 200 - perc*200,//Coordenada Y da porcentagem
+		    i,//Space Legend
+			 0,//Space Percentage
+			 1*base.width/60,//Coordenada X da porcentagem
+			 19*base.height/20 + rect.height,//Coordenada Y da porcentagem
 			 1,//Se 1 = Retangulo
 			 0,//Se 1 = Arco
 			 rect.bg,//Color Bg
@@ -54,22 +54,45 @@ void barra(Drawer * drawer, Chart * chart, Rectangle base) {
 		  DrawerDrawText(drawer, text, base);
 		  
 	}
-	Axis axisx = {
-	base.width/11,
-	base.height/3 -50,
-	base.width/11,
-	2*base.height/3 + 20,	
-	2,
-	{0.0,0.0,0.0,1.0}
-};
 	Axis axisy = {
-	base.width/11- 20,
-	base.height/3 +208,
-	3*base.width/2 - 500,
-	base.height/3 +208,
+	1*base.width/15,
+	3*base.height/15,
+	1*base.width/15,
+	20*base.height/21,
 	2,
 	{0.0,0.0,0.0,1.0}
 };
+	Axis axisx = {
+	1*base.width/21,
+	14*base.height/15,
+	12*base.width/15,
+	14*base.height/15,
+	2,
+	{0.0,0.0,0.0,1.0}
+};
+	Arrow arrowR = {
+	1*base.width/15 - 5,
+	3*base.width/18,
+	1*base.width/15 + 5,
+	3*base.width/18,
+	axisy.x0,
+	axisy.y0,
+	2,
+	{0.0,0.0,0.0,1.0}
+};
+	Arrow arrowL = {
+	18*base.width/23,
+	14*base.height/15 - 5,
+	18*base.width/23 ,
+	14*base.height/15 + 5,
+	axisx.x,
+	axisx.y,
+	2,
+	{0.0,0.0,0.0,1.0}
+};
+	
+	DrawerDrawArrow(drawer, axisx, arrowR);
+	DrawerDrawArrow(drawer, axisx, arrowL);	
   	DrawerDrawAxis(drawer, axisx, base);
 	DrawerDrawAxis(drawer, axisy, base);
 }		
@@ -83,41 +106,41 @@ void pizza(Drawer * drawer, Chart * chart, Rectangle base) {
 
 		float perc = chart->content[i]->percentage;
 	 
-		RandColor(&rcolor);
-		PercToText(perc*100,str);
-	   Arc arc = {base.width/4, //x
+		randColor(&rcolor);
+		percToText(perc*100,str);
+	   Arc arc = {base.width/3, //x
                   base.height/2, //y
                   initAngle, //initAngle
                   perc*2*M_PI+initAngle, //endAngle
-                  150,   //radius
+                  200,   //radius
                   0.5, // borderWidth
                  {rcolor.r/10000000, rcolor.g/10000000, rcolor.b/10000000, 1.0}, // Color Bg
                  {1.0,1.0,1.0, 1.0} // Color border
         };
 		
 		
-		TextPlus(str, "%");
+		textPlus(str, "%");
 
 	 	Text text = {
 		  	 
 	 		 20,//Font Size
-			 2*base.width/3,//X
-			 base.height/3,//Y
+			 3*base.width/4,//X
+			 base.height/2,//Y
 		  	 chart->content[i]->label ,//Label
 			 str,//Percentage(String Form)
 		  	 1,//BorderWidth
 		    35*i,//Space Legend
-			 100,//Space Percentage
+			 5,//Space Percentage
 			 2*base.width/3,//Coordenada X da porcentagem
-			 base.height/3,//Coordenada Y da porcentagem
+			 base.height/2,//Coordenada Y da porcentagem
 	   	 0,//Se 1 = Retangulo
 	       1,//Se 1 = Arco
 		  	 {1.0,1.0,1.0,1.0},//Color Bg
 		  	 {rcolor.r/10000000, rcolor.g/10000000, rcolor.b/10000000, 1.0},//Color Border
 		    {1.0,1.0,1.0,1.0}//Color of Percentage
 };
-	Rectangle rectPerc = {2*base.width/3 + 95, //x
-            	      		base.height/3 - (3)*text.fontSize/(4) + text.spaceLegend, //y
+	Rectangle rectPerc = {2*base.width/3, //x
+            	      	 base.height/2 - (3)*text.fontSize/(4) + text.spaceLegend, //y
             	      		(5)*text.fontSize/(2),//width
                         	(3)*text.fontSize/2, //Percentage
                   	 		1.0, // borderWidth
@@ -139,10 +162,37 @@ void pizza(Drawer * drawer, Chart * chart, Rectangle base) {
 		 
 
 
-int main() {
-	
-	Chart * chart = ChartCreate("test.json");
+int main(int argc, char *argv[]) {
+      if(argc == 2) {	
+	char kind[8];
+	char  s2[] = {".json"};
+	type(argv[1],kind);
+	int result = compare(kind, s2);
+	 if(result != 0) {
+	   printf("Argumento passado não é do tipo .json!\n");	
+	   return 0;
+	  }
+}
+    else if(argc > 2) {
+	printf("Mais argumentos do que o necessário!\nPor favor, insira um argumento do tipo .json!\n");
+	return 0;
+}	
+    else if(argc < 2) {
+	printf("Menos argumentos do que o necessário!\nPor favor, insira um argumento do tipo .json!\n");
+	return 0;
+}
+	Chart * chart = ChartCreate(argv[1]);
 	Drawer * cairo = DrawerInit(800, 600, chart->fileType, chart->filePath);
+	
+	int num_elementos = chart->DatumSize;
+	
+	sort(chart->content, chart);
+	int cont3;
+	for(cont3 = 0; cont3 < num_elementos;cont3++) {
+		printf("%f\n", chart->content[cont3]->percentage);
+	}
+		printf("%f\n", chart->Sum_Percentages);
+
 	
 	Title title = {30.0,
 						chart->chartName,

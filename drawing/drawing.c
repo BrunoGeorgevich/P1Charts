@@ -16,13 +16,13 @@ void DrawerDestroy(Drawer * self){
     cairo_surface_destroy(self->surface);
     free(self);
 }
-void RandColor(Color * color) {
+void randColor(Color * color) {
 	color->r = (rand()%9999999);
 	color->g = (rand()%9999999);
 	color->b = (rand()%9999999);
 }
 
-void TextPlus(char str[100], char aux[100]) {
+void textPlus(char str[100], char aux[100]) {
 		strcat(str,aux);
 }
 
@@ -107,7 +107,7 @@ void DrawerDrawText(Drawer * self, Text text,  Rectangle rect) {
 													text.bg.b,
 													text.bg.a);
    cairo_text_extents (self->context,text.label, &extents);	
-	x = text.x-(extents.width/2 + extents.x_bearing);
+	x = text.x-(extents.width/2 + extents.x_bearing)*text.rect;
 	y = text.y-(extents.height/2 + extents.y_bearing);
    cairo_line_to(self->context, x, y+text.spaceLegend);
 	cairo_text_path (self->context,text.label);
@@ -164,3 +164,20 @@ void DrawerSave(Drawer * self, char fileTypePDF, const char * filePath) {
 		cairo_surface_write_to_png(self->surface, filePath);
 	}
 }
+void DrawerDrawArrow (Drawer * self, Axis axis, Arrow arrow) {
+	cairo_save(self->context);
+	cairo_set_line_width(self->context, arrow.arrowWidth);
+	cairo_move_to(self->context, arrow.x0r, arrow.y0r);
+	cairo_line_to(self->context, arrow.x, arrow.y);
+	cairo_set_source_rgba(self->context,
+						  arrow.bg.r,
+						  arrow.bg.g,
+						  arrow.bg.b,
+						  arrow.bg.a);
+	cairo_fill_preserve(self->context);
+	cairo_move_to(self->context, arrow.x0l, arrow.y0l);
+	cairo_line_to(self->context, arrow.x, arrow.y);
+	cairo_stroke(self->context);
+	cairo_restore(self->context);
+}
+
