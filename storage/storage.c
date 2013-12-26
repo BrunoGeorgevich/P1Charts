@@ -27,28 +27,28 @@ void ChartPrint(Chart * chart) {
 	}
 }
 
-const char * JsonGetStringAttribute(json_t *root, const char * attName) {
+const char * JsonGetStringAttribute(json_t *root, const char * attName) {//Função da Biblioteca Jansson que extrai 																										  strings dos arquivos .json
 	json_t * jAtt = json_object_get(root, attName);
     const char * result = json_string_value(jAtt);
     free(jAtt);
     return result;
 }
 
-int JsonGetIntAttribute(json_t *root, const char * attName) {
+int JsonGetIntAttribute(json_t *root, const char * attName) {//Função da Biblioteca Jansson que extrai 																						  Inteiros dos arquivos .json
 	json_t * jAtt = json_object_get(root, attName);
     int result = json_integer_value(jAtt);
     free(jAtt);
     return result;
 }
 
-float JsonGetFloatAttribute(json_t *root, const char * attName) {
+float JsonGetFloatAttribute(json_t *root, const char * attName) {//Função da Biblioteca Jansson que extrai 																								Números do Tipo Ponto Flutuante dos arquivos .json
 	json_t * jAtt = json_object_get(root, attName);
     float result = json_real_value(jAtt);
     free(jAtt);
     return result;
 }
 
-char * createFilePath(const char * fileName, const char *fileType) {
+char * createFilePath(const char * fileName, const char *fileType) {//Função que uni o Nome do Arquivo com 																									 Seu tipo	(.Tipo)
 	char * filePath = malloc(strlen(fileName) + strlen(fileType) + 3);
 	sprintf(filePath, "%s.%s", fileName, fileType);
 	return filePath;
@@ -69,8 +69,8 @@ Chart *ChartCreate(char * filePath) {
 									 fileType);
     chart->width = JsonGetIntAttribute(root, "width");
     chart->height = JsonGetIntAttribute(root, "height");
-	 chart->chartType = JsonGetStringAttribute(root, "chartType");
-	 chart->chartName = JsonGetStringAttribute(root, "chartName");
+	 chart->chartType = JsonGetStringAttribute(root, "type");
+	 chart->chartName = JsonGetStringAttribute(root, "name");
 	 json_t * jcontent = json_object_get(root, "content");
 	 chart->content = malloc(sizeof(Datum *)*json_array_size(jcontent) + 1);
 	 chart->DatumSize = json_array_size(jcontent);
@@ -87,7 +87,7 @@ Chart *ChartCreate(char * filePath) {
 	ChartPrint(chart);
     return chart;
 }
-	void type(char * string, char * type) {
+	void type(char * string, char * type) {//Função que extrai o tipo dos parâmetros de entrada
 		int cont;
 		for(cont = 0; ;cont++) {
 		 if(string[cont] == '.') {
@@ -101,10 +101,10 @@ Chart *ChartCreate(char * filePath) {
 		  
 		}
 }
-	int compare(char * one, char * two) {
+	int compare(char * one, char * two) {//Função que compara os arquivos com o .json
 		return strcmp(one, two);
 }
-	void sort(float * array, Chart * chart) {
+	void sort(float * array, Chart * chart) {//Função que ordena em ordem crescente os parâmetros do Datum, de acordo com 																  sua porcentagem
 		int cont,aux2;
 		float aux;
 		int i = chart->DatumSize;
@@ -123,22 +123,22 @@ Chart *ChartCreate(char * filePath) {
 		}
 	}
 }
-	int SpaceValue(int x) {
+	int SpaceValue(int x) {//Função que regula o espaço entre as barras do Gráfico de barras
 		switch(x) {
 		 case 1:
 			return 1;
 		 	break;
 		 case 2:
-			return 24;
+			return 26;
 		 	break;
 		 case 3:
-			return 16;
+			return 18;
 		 	break;
 		 case 4:
-			return 12;
+			return 14;
 		 	break;
 		 case 5:
-			return 10;
+			return 11;
 		 	break;
 	}
 }

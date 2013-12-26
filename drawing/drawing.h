@@ -11,13 +11,13 @@ struct _drawer {
 
 typedef struct _drawer Drawer;
 
-struct _color {
+struct _color {//Definindo a Struct responsável pelas cores
 	float r, g, b, a;
 };
 
 typedef struct _color Color;
 
-struct _rectangle {
+struct _rectangle {//Definindo a Struct responsável pelos Retângulos
 	int x;
 	int y;
 	float width;
@@ -29,7 +29,7 @@ struct _rectangle {
 
 typedef struct _rectangle Rectangle;
 
-struct _arc {
+struct _arc {//Definindo a Struct responsável pelos Arcos
     int x;
     int y;
 	double initAngle;
@@ -42,7 +42,7 @@ struct _arc {
 
 typedef struct _arc Arc;
 
-struct _arrow {
+struct _arrow {//Definindo a Struct responsável pelas Setas
 	int x0r;
 	int y0r;
 	int x0l;
@@ -55,7 +55,7 @@ struct _arrow {
 
 typedef struct _arrow Arrow;
 
-struct _axis {
+struct _axis {//Definindo a Struct responsável pelos Eixos
 	int x0;
 	int y0;
 	int x;
@@ -66,7 +66,7 @@ struct _axis {
 
 typedef struct _axis Axis;
 
-struct _text {
+struct _text {//Definindo a Struct responsável pelos Textos
 	float fontSize;
 	int x;
 	int y;
@@ -87,7 +87,7 @@ struct _text {
 
 typedef struct _text Text;
 
-struct _title {
+struct _title {//Definindo a Struct responsável pelo Título
 	float fontSize;
 	const char * title;
 	Color bg;
@@ -103,6 +103,5 @@ void DrawerDrawArc(Drawer * self, Arc arc);
 void DrawerDrawText(Drawer * self, Text text, Rectangle rect);
 void DrawerSave(Drawer * self, char fileTypePDF, const char * filePath);
 void randColor(Color * color);
-void textPlus(char str[100], char aux[100]);
 void DrawerDrawTextTitle(Drawer * self, Title title,  Rectangle rect);
 void DrawerDrawAxis(Drawer * self, Axis axis, Rectangle rect);

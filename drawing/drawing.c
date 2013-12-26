@@ -16,17 +16,18 @@ void DrawerDestroy(Drawer * self){
     cairo_surface_destroy(self->surface);
     free(self);
 }
-void randColor(Color * color) {
-	color->r = (rand()%9999999);
-	color->g = (rand()%9999999);
-	color->b = (rand()%9999999);
+void randColor(Color * color) {//Função que randomiza as Cores
+	float x;
+	color->r = (rand()%999);//Limitando o intervalo de abrangência das cores
+	color->g = (rand()%999);
+	color->b = (rand()%999);
+	x = 1000.00;
+	color->r = (float)color->r/x;//Transformando os inteiros em Ponto Flutuante( 0 <= x <= 1)
+	color->g = (float)color->g/x;
+	color->b = (float)color->b/x;
 }
 
-void textPlus(char str[100], char aux[100]) {
-		strcat(str,aux);
-}
-
-void DrawerDrawAxis(Drawer * self, Axis axis, Rectangle rect) {
+void DrawerDrawAxis(Drawer * self, Axis axis, Rectangle rect) {//Função que desenha os Eixos
 	cairo_save(self->context);
 	cairo_set_line_width(self->context, axis.axisWidth);
 	cairo_move_to(self->context, axis.x0, axis.y0);
@@ -42,7 +43,7 @@ void DrawerDrawAxis(Drawer * self, Axis axis, Rectangle rect) {
 }
 	
 
-void DrawerDrawRectangle(Drawer * self, Rectangle rect) {
+void DrawerDrawRectangle(Drawer * self, Rectangle rect) {//Função que desenha os Retângulos
 	cairo_save(self->context);
 	cairo_set_line_width(self->context, rect.borderWidth);
 	cairo_rectangle (self->context, rect.x, rect.y, rect.width, rect.height);
@@ -61,7 +62,7 @@ void DrawerDrawRectangle(Drawer * self, Rectangle rect) {
  	cairo_restore(self->context);
 }
 
-void DrawerDrawArc(Drawer * self, Arc arc) {
+void DrawerDrawArc(Drawer * self, Arc arc) {//Função que desenha os Arcos
     cairo_save(self->context);
     cairo_set_line_width(self->context, arc.borderWidth);
     cairo_arc (self->context,
@@ -94,23 +95,23 @@ void DrawerDrawArc(Drawer * self, Arc arc) {
 }
 
 
-void DrawerDrawText(Drawer * self, Text text,  Rectangle rect) {
+void DrawerDrawText(Drawer * self, Text text,  Rectangle rect) {//Função que escreve os Textos
 	float x, y;	
 	cairo_save(self->context);	
 	cairo_text_extents_t extents;
-	cairo_select_font_face (self->context, "Arial", CAIRO_FONT_SLANT_NORMAL,
+	cairo_select_font_face (self->context, "Arial", CAIRO_FONT_SLANT_NORMAL,//Definindo o tipo da fonte
                                CAIRO_FONT_WEIGHT_BOLD);
-	cairo_set_font_size (self->context, text.fontSize);
-	cairo_set_source_rgba(self->context, 
+	cairo_set_font_size (self->context, text.fontSize);//Definindo o tamanho da fonte
+	cairo_set_source_rgba(self->context, //Definindo as cores das fontes
 													text.bg.r,
 													text.bg.g,
 													text.bg.b,
 													text.bg.a);
-   cairo_text_extents (self->context,text.label, &extents);	
-	x = text.x-(extents.width/2 + extents.x_bearing)*text.rect;
-	y = text.y-(extents.height/2 + extents.y_bearing);
-   cairo_line_to(self->context, x, y+text.spaceLegend);
-	cairo_text_path (self->context,text.label);
+   cairo_text_extents (self->context,text.label, &extents);	//Função da biblioteca Cairo que torna o meio do texto o seu 																					  ponto central 
+	x = text.x-(extents.width/2 + extents.x_bearing)*text.rect; // Definindo a coordenada x do texto
+	y = text.y-(extents.height/2 + extents.y_bearing);//Definindo a coordenada y do texto
+   cairo_line_to(self->context, x, y+text.spaceLegend);//Função da biblioteca Cairo que desenha Linhas
+	cairo_text_path (self->context,text.label);//Definindo qual texto será escrito
 	cairo_fill_preserve(self->context);
 	cairo_set_source_rgba(self->context, 
 													text.border.r,
@@ -136,7 +137,7 @@ void DrawerDrawText(Drawer * self, Text text,  Rectangle rect) {
 	cairo_stroke(self->context);
 	cairo_restore(self->context);
 }
-void DrawerDrawTextTitle(Drawer * self, Title title,  Rectangle rect) {
+void DrawerDrawTextTitle(Drawer * self, Title title,  Rectangle rect) {//Função que escreve o Título do Gráfico
 	float x, y;	
 	cairo_save(self->context);	
 	cairo_text_extents_t extents;
@@ -164,7 +165,7 @@ void DrawerSave(Drawer * self, char fileTypePDF, const char * filePath) {
 		cairo_surface_write_to_png(self->surface, filePath);
 	}
 }
-void DrawerDrawArrow (Drawer * self, Axis axis, Arrow arrow) {
+void DrawerDrawArrow (Drawer * self, Axis axis, Arrow arrow) {//Função que desenha as setas dos Eixos
 	cairo_save(self->context);
 	cairo_set_line_width(self->context, arrow.arrowWidth);
 	cairo_move_to(self->context, arrow.x0r, arrow.y0r);

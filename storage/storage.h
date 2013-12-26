@@ -4,13 +4,13 @@
 
 enum {PNG, PDF};
 
-struct _datum {
+struct _datum {//Definindo Struct responsável pela Porcentagem e Rótulo dos Parâmetros do .json
 	double percentage;
 	const char * label;
 };
 typedef struct _datum Datum;
 
-struct _chart {
+struct _chart {//Definindo Struct responsável pelos Parâmetros do gráfico
 	const char * filePath;
 	char fileType;
 	const char * chartName;
