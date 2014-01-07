@@ -26,7 +26,7 @@ typedef struct _chart Chart;
 char * createFilePath(const char * fileName, const char *fileType);
 void type(char * string, char * type);
 int compare(char * one, char * two);
-void sort(float * array, Chart * chart);
+float sort(float * array, Chart * chart);
 Chart * ChartCreate(char * filePath);
 int SpaceValue(int x);
 

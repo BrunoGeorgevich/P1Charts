@@ -104,12 +104,11 @@ Chart *ChartCreate(char * filePath) {
 	int compare(char * one, char * two) {//Função que compara os arquivos com o .json
 		return strcmp(one, two);
 }
-	void sort(float * array, Chart * chart) {//Função que ordena em ordem crescente os parâmetros do Datum, de acordo com 																  sua porcentagem
-		int cont,aux2;
+	float sort(float * array, Chart * chart) {//Função que ordena em ordem crescente os parâmetros do Datum, de acordo com 																  sua porcentagem
+		int cont, aux2;
 		float aux;
-		int i = chart->DatumSize;
-		for(cont = 1;cont < i ; cont++) {	
-
+		int i = chart -> DatumSize;
+		for(cont = 1;cont < i ; cont++) {
 		 if(array[cont-1] > array[cont]) {
 		aux = array[cont];
 		array[cont] = array[cont-1];
@@ -117,10 +116,11 @@ Chart *ChartCreate(char * filePath) {
 	}
 }
 	
-		for(aux2 = 1;aux2< i ; aux2++) {
+		for(aux2 = 1;aux2 < i ; aux2++) {
 		 if(array[aux2-1] > array[aux2]) {
 		 sort(array, chart);
 		}
+	return array[cont-1];
 	}
 }
 	int SpaceValue(int x) {//Função que regula o espaço entre as barras do Gráfico de barras
@@ -129,16 +129,16 @@ Chart *ChartCreate(char * filePath) {
 			return 1;
 		 	break;
 		 case 2:
-			return 26;
+			return 33;
 		 	break;
 		 case 3:
-			return 18;
+			return 22;
 		 	break;
 		 case 4:
-			return 14;
+			return 16;
 		 	break;
 		 case 5:
-			return 11;
+			return 13;
 		 	break;
 	}
 }

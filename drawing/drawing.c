@@ -18,9 +18,9 @@ void DrawerDestroy(Drawer * self){
 }
 void randColor(Color * color) {//Função que randomiza as Cores
 	float x;
-	color->r = (rand()%999);//Limitando o intervalo de abrangência das cores
-	color->g = (rand()%999);
-	color->b = (rand()%999);
+	color->r = (rand()%799);//Limitando o intervalo de abrangência das cores
+	color->g = (rand()%799);
+	color->b = (rand()%799);
 	x = 1000.00;
 	color->r = (float)color->r/x;//Transformando os inteiros em Ponto Flutuante( 0 <= x <= 1)
 	color->g = (float)color->g/x;

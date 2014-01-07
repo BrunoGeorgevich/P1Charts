@@ -9,7 +9,7 @@ void percToText(float x, char str[20]) {//Função que transforma as porcentagen
 		strcat(str,"%");
 }
 
-void barra(Drawer * drawer, Chart * chart, Rectangle base) {//Função que desenha o Gráfico de Barras
+void barra(Drawer * drawer, Chart * chart, Rectangle base, float * aux) {//Função que desenha o Gráfico de Barras
 	    
 		 Color rcolor;//Declarando um parâmetro rcolor do tipo Color
 	
@@ -28,8 +28,8 @@ void barra(Drawer * drawer, Chart * chart, Rectangle base) {//Função que desen
 
 	 		 base.width/9 + (SpaceValue(chart->DatumSize)*base.width/80)*(i), //x
 	 		 14*base.height/15, //y
-	 		 (8*base.width/15)/chart->DatumSize,//width
-	 		-perc*((11*base.height/15)/chart->Sum_Percentages), //height
+	 		 (11*base.width/15)/chart->DatumSize,//width
+	 		-perc*((11*base.height/15)/sort(aux, chart)), //height
 	 		 0.0, // borderWidth
 	 		{rcolor.r, rcolor.g, rcolor.b, 1.0}, // Color Bg
 	 		{1.0,1.0,1.0, 1.0} // Color border
@@ -51,8 +51,8 @@ void barra(Drawer * drawer, Chart * chart, Rectangle base) {//Função que desen
 			 19*base.height/20 + rect.height,//Coordenada Y da porcentagem
 			 1,//Se 1 = Retangulo
 			 0,//Se 1 = Arco
-			 rect.bg,//Color Bg
-			 {1.0,1.0,1.0,1.0},//Color Border
+			 {0.0,0.0,0.0,1.0},//Color Bg
+			 rect.bg,//Color Border
 			 rect.bg//Color of Percentage
 };
 	
@@ -64,7 +64,7 @@ void barra(Drawer * drawer, Chart * chart, Rectangle base) {//Função que desen
 		Axis axisy = {
 	 		 
 			 1*base.width/15,// Posição x0
-	 		 3*base.height/15,// Posição y0
+	 		 3*base.height/18,// Posição y0
 	 		 1*base.width/15,// Posição x
 	 		 39*base.height/40,// Posição y
 	 		 2,// Largura do Eixo
@@ -74,7 +74,7 @@ void barra(Drawer * drawer, Chart * chart, Rectangle base) {//Função que desen
 	 		 
 			 1*base.width/40,// Posição x0
 	 		 14*base.height/15,// Posição y0
-	 		 12*base.width/15,// Posição x
+	 		 14*base.width/15,// Posição x
 	 		 14*base.height/15,// Posição y
 	 		 2,// Largura do Eixo
 	 		 {0.0,0.0,0.0,1.0}// Cor do Eixo
@@ -82,9 +82,9 @@ void barra(Drawer * drawer, Chart * chart, Rectangle base) {//Função que desen
 		Arrow arrowY = {
 
 	 		 1*base.width/15 - 5,// Posição X da ponta Direita da Seta
-	 		 3*base.width/18,// Posição Y da ponta Direita da Seta
+	 		 3*base.width/21,// Posição Y da ponta Direita da Seta
 	 		 1*base.width/15 + 5,// Posição X da ponta Esquerda da Seta
-	 		 3*base.width/18,// Posição Y da ponta Esquerda da Seta
+	 		 3*base.width/21,// Posição Y da ponta Esquerda da Seta
 	 		 axisy.x0,// Posição X de intersecção da ponta Direita com a ponta Esquerda
 	 		 axisy.y0,// Posição Y de intersecção da ponta Direita com a ponta Esquerda
 	 		 2,// Largura da Seta
@@ -92,9 +92,9 @@ void barra(Drawer * drawer, Chart * chart, Rectangle base) {//Função que desen
 };
 		Arrow arrowX = {
 	 		 
-			 18*base.width/23,// Posição X da ponta Direita da Seta
+			 21*base.width/23,// Posição X da ponta Direita da Seta
 	 		 14*base.height/15 - 5,// Posição Y da ponta Direita da Seta
-	 		 18*base.width/23 ,// Posição X da ponta Esquerda da Seta
+	 		 21*base.width/23 ,// Posição X da ponta Esquerda da Seta
 	 		 14*base.height/15 + 5,// Posição Y da ponta Esquerda da Seta
 	 		 axisx.x,// Posição X de intersecção da ponta Direita com a ponta Esquerda
 	 		 axisx.y,// Posição Y de intersecção da ponta Direita com a ponta Esquerda
@@ -151,14 +151,14 @@ void pizza(Drawer * drawer, Chart * chart, Rectangle base) {
 			 4*base.height/10 + rectPerc.height/2,//Y
 		  	 chart->content[i]->label ,//Label
 			 str,//Percentage(String Form)
-		  	 1,//BorderWidth
+		  	 1.4,//BorderWidth
 		    rectPerc.y - 4*base.height/10,//Space Legend
-			 0,//Space Percentage
+			 -5,//Space Percentage
 			 2*base.width/3 + rectPerc.width/4,//Coordenada X da porcentagem
 			 4*base.height/10 + rectPerc.height/2,//Coordenada Y da porcentagem
 	   	 0,//Se 1 = Retangulo
 	       1,//Se 1 = Arco
-		  	 {1.0,1.0,1.0,1.0},//Color Bg
+		  	 {0.0,0.0,0.0,1.0},//Color Bg
 		  	 {rcolor.r, rcolor.g, rcolor.b, 1.0},//Color Border
 		    {1.0,1.0,1.0,1.0}//Color of Percentage
 };
@@ -208,7 +208,13 @@ int main(int argc, char *argv[]) {
 	
 			  int num_elementos = chart->DatumSize;//Declarando o número de elementos do Datum
 	
-			  sort(chart->content, chart);//Função que lista os elementos em ordem crescente
+				 float aux[num_elementos];
+				 int cont3;
+ 
+				for(cont3 = 0; cont3 < num_elementos; cont3++) {
+					aux[cont3] = chart->content[cont3]->percentage;
+				}  			  
+
 
 		Title title = {
 		    
@@ -247,7 +253,7 @@ int main(int argc, char *argv[]) {
 	
 		   }else if(strcmp(chart->chartType,"bars") == 0){//Se for Barras
 		    
-			  barra(cairo,chart, base);
+			  barra(cairo,chart, base, aux);
 }
 			  DrawerSave(cairo, chart->fileType, chart->filePath);
 			  DrawerDestroy(cairo);
